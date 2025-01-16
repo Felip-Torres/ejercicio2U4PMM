@@ -29,10 +29,10 @@ class _HomeScreenState extends State<HomeScreen> {
       case 0:
         resultado+="piedra";
         if (choice == "tijeras") {
-          Preferences.vidaJugador -= 10;
+          Preferences.vidaJugador -= 10*Preferences.Piso;
           resultado += "\nPierdes";
         } else if (choice == "papel") {
-          Preferences.vidaEnemigo -= 10;
+          Preferences.vidaEnemigo -= 10*Preferences.LVL;
           resultado += "\nGanas";
         } else {
           resultado += "\nEmpate";
@@ -41,10 +41,10 @@ class _HomeScreenState extends State<HomeScreen> {
       case 1:
         resultado+="papel";
         if (choice == "piedra") {
-          Preferences.vidaJugador -= 10;
+          Preferences.vidaJugador -= 10*Preferences.Piso;
           resultado += "\nPierdes";
         } else if (choice == "tijeras") {
-          Preferences.vidaEnemigo -= 10;
+          Preferences.vidaEnemigo -= 10*Preferences.LVL;
           resultado += "\nGanas";
         } else {
           resultado += "\nEmpate";
@@ -53,10 +53,10 @@ class _HomeScreenState extends State<HomeScreen> {
       case 2:
         resultado+="tijeras";
         if (choice == "papel") {
-          Preferences.vidaJugador -= 10;
+          Preferences.vidaJugador -= 10*Preferences.Piso;
           resultado += "\nPierdes";
         } else if (choice == "piedra") {
-          Preferences.vidaEnemigo -= 10;
+          Preferences.vidaEnemigo -= 10*Preferences.LVL;
           resultado += "\nGanas";
         } else {
           resultado += "\nEmpate";
@@ -68,15 +68,24 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // Comprobación de vida
     if (Preferences.vidaJugador <= 0) {
-      Preferences.vidaJugador = 100;
+      Preferences.vidaJugador = 100*Preferences.LVL;
       Preferences.vidaEnemigo = 100;
+      Preferences.Piso = 1;
       resultado = "Moriste";
     }
     if (Preferences.vidaEnemigo <= 0) {
-      Preferences.vidaEnemigo = 100;
+      Preferences.Piso++;
+      Preferences.vidaEnemigo = 100*Preferences.Piso;
+      Preferences.XP += 10 * Preferences.Piso;
       resultado = "Avanzas al siguiente piso";
+      if(Preferences.XP>=100){
+        while(Preferences.XP>=100){
+          Preferences.XP-=100;
+          Preferences.LVL+=1;  
+        } 
+        resultado +="\n Y subes de nivel";
+      }
     }
-
     // Actualizar el estado para que se reflejen los cambios en la UI
     setState(() {});
   }
@@ -91,9 +100,33 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+        Text("LVL ${Preferences.LVL}",
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        // barra XP
+        Container(
+          width: 200,
+          height: 20,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: LinearProgressIndicator(
+              value: Preferences.XP/100,
+              backgroundColor: Colors.grey[300],
+              valueColor: const AlwaysStoppedAnimation<Color>(Colors.yellow),
+            ),
+          ),
+        ),
           Personaje(
             nombre: Preferences.nombre,
             vida: Preferences.vidaJugador,
+            vidaMax: 100*Preferences.LVL,
             imagen: "assets/personaje.png",
           ),
           const SizedBox(height: 10),
@@ -101,11 +134,17 @@ class _HomeScreenState extends State<HomeScreen> {
             onChoiceSelected: _onChoiceSelected,
           ),
           const SizedBox(height: 10),
-          Text(resultado),
+          Text(resultado,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           const SizedBox(height: 10),
           Personaje(
-            nombre: "enemigo",
+            nombre: "Slime LVL${Preferences.Piso}",
             vida: Preferences.vidaEnemigo,
+            vidaMax: 100*Preferences.Piso,
             imagen: "assets/slime.png",
           ),
         ],

@@ -6,9 +6,11 @@ class Personaje extends StatelessWidget {
     this.vida = 100,
     required this.nombre,
     required this.imagen,
+    required this.vidaMax,
   });
 
   final int vida;
+  final int vidaMax;
   final String nombre;
   final String imagen;
 
@@ -28,7 +30,7 @@ class Personaje extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: LinearProgressIndicator(
-              value: vida/100,
+              value: vida/vidaMax,
               backgroundColor: Colors.grey[300],
               valueColor: const AlwaysStoppedAnimation<Color>(Colors.red),
             ),

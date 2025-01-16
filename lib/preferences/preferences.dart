@@ -7,7 +7,9 @@ class Preferences {
   static bool _DarkMode = false;
   static int _vidaJugador = 100;
   static int _vidaEnemigo = 100;
-  
+  static int _xp = 0;
+  static int _lvl = 1;
+  static int _piso = 1;
 
   static Future init() async{
     _prefs = await SharedPreferences.getInstance();
@@ -47,6 +49,33 @@ class Preferences {
   static set vidaEnemigo(int vidaEnemigo){
     _vidaEnemigo = vidaEnemigo;
     _prefs.setInt('vidaEnemigo', vidaEnemigo);
+  }
+
+  static int get XP {
+    return _prefs.getInt('XP') ?? _xp;
+  }
+
+  static set XP(int XP){
+    _xp = XP;
+    _prefs.setInt('XP', XP);
+  }
+
+  static int get LVL {
+    return _prefs.getInt('LVL') ?? _lvl;
+  }
+
+  static set LVL(int LVL){
+    _lvl = LVL;
+    _prefs.setInt('LVL', LVL);
+  }
+
+  static int get Piso {
+    return _prefs.getInt('Piso') ?? _piso;
+  }
+
+  static set Piso(int Piso){
+    _piso = Piso;
+    _prefs.setInt('Piso', Piso);
   }
   
 }
