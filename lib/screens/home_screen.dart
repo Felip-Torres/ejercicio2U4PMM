@@ -94,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Personaje(
             nombre: Preferences.nombre,
             vida: Preferences.vidaJugador,
-            imagen: "assets/character.png",
+            imagen: "assets/personaje.png",
           ),
           const SizedBox(height: 10),
           BotonesJuego(

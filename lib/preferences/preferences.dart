@@ -7,6 +7,7 @@ class Preferences {
   static bool _DarkMode = false;
   static int _vidaJugador = 100;
   static int _vidaEnemigo = 100;
+  
 
   static Future init() async{
     _prefs = await SharedPreferences.getInstance();
