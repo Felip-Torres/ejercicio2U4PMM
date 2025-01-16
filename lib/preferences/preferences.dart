@@ -5,8 +5,8 @@ class Preferences {
 
   static String _nombre = "Cambia el nombre en los ajustes";
   static bool _DarkMode = false;
-  static int _vidaJugador = 1;
-  static int _vidaEnemigo = 1;
+  static int _vidaJugador = 100;
+  static int _vidaEnemigo = 100;
 
   static Future init() async{
     _prefs = await SharedPreferences.getInstance();
@@ -45,7 +45,7 @@ class Preferences {
 
   static set vidaEnemigo(int vidaEnemigo){
     _vidaEnemigo = vidaEnemigo;
-    _prefs.setInt('vidaJugador', vidaEnemigo);
+    _prefs.setInt('vidaEnemigo', vidaEnemigo);
   }
   
 }

@@ -19,11 +19,6 @@ class SideMenu extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.people_outlined),
-            title: Text('People'),
-            onTap: () {},
-          ),
-          ListTile(
             leading: const Icon(Icons.settings_outlined),
             title: Text('Settings'),
             onTap: () {

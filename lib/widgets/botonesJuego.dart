@@ -17,7 +17,7 @@ class BotonesJuego extends StatelessWidget {
         const SizedBox(width: 16),
         _buildGameButton('📄', 'papel'),
         const SizedBox(width: 16),
-        _buildGameButton('✂️', 'tijera'),
+        _buildGameButton('✂️', 'tijeras'),
       ],
     );
   }
